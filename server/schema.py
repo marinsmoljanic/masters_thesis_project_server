@@ -155,15 +155,13 @@ class UpdatePerson(graphene.Mutation):
         id = graphene.ID()
         LastName = graphene.String()
         FirstName = graphene.String()
-        PersonalId = graphene.String()
 
     person = graphene.Field(PersonType)
 
-    def mutate(self, info, id, LastName, FirstName, PersonalId):
+    def mutate(self, info, id, LastName, FirstName):
         person = Person.objects.get(pk=id)
         person.LastName = LastName if LastName is not None else person.LastName
         person.FirstName = FirstName if FirstName is not None else person.FirstName
-        person.PersonalId = PersonalId if PersonalId is not None else person.PersonalId
 
         person.save()
         return UpdatePerson(person=person)
