@@ -31,7 +31,7 @@ class Query(graphene.ObjectType):
     all_person = graphene.List(PersonType)
 
     person_role_by_id = graphene.Field(PersonRoleType, id=graphene.ID())
-    person_role_by_personid = graphene.Field(PersonRoleType, personid=graphene.String(required=True))
+    person_roles_by_id= graphene.List(PersonRoleType, personid=graphene.String(required=True))
     all_person_role = graphene.List(PersonRoleType)
 
     project_by_id = graphene.Field(ProjectType, id=graphene.ID())
@@ -50,7 +50,7 @@ class Query(graphene.ObjectType):
         return PersonRole.objects.all()
     def resolve_person_role(self, info, id):
         return PersonRole.objects.get(pk=id)
-    def resolve_person_role_by_personid(self, info, personid):
+    def resolve_person_roles_by_id(self, info, personid):
         try:
             return PersonRole.objects.get(PersonId=personid)
         except PersonRole.DoesNotExist:
